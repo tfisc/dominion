@@ -136,6 +136,11 @@ public class Player {
 		 hand=this.hand;
 		 return hand;
 	}
+	public CardList cardsInDraw() {
+		 CardList draw = new CardList();
+		 draw=this.draw;
+		 return draw;
+	}
 	
 	/**
 	 * Renvoie une liste de toutes les cartes possédées par le joueur
@@ -144,6 +149,9 @@ public class Player {
 	 */
 	public void addDiscard(Card c) {
 		discard.add(c);
+	}
+	public void addHand(Card c) {
+		hand.add(c);
 	}
 	public CardList totalCards() {
 		 CardList allcards = new CardList();
@@ -217,6 +225,7 @@ public class Player {
 		return pioche;
 		
 	}
+
 	
 	/**
 	 * Renvoie une représentation de l'état du joueur sous forme d'une chaîne
@@ -583,7 +592,7 @@ public class Player {
 			}
 		}
 		
-		//on joue les cartes tr�sors
+		//on joue les cartes tr�sors
 		tresorsDispo=getTreasureCards();
 		for(int i=0;i<tresorsDispo.size();i++) {
 			playCard(tresorsDispo.get(i).getName());

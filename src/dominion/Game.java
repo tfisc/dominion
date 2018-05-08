@@ -55,6 +55,10 @@ public class Game {
 	 * 
 	 * @param index indice dans le tableau des joueurs du joueur à renvoyer
 	 */
+	
+	public void addTrashedCards(Card c) {
+		trashedCards.add(c);
+	}
 	public Player getPlayer(int index) {
 	}
 	

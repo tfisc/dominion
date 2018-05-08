@@ -11,4 +11,5 @@ import dominion.card.*;
  * Tous vos adversaires piochent 1 carte.
  */
 public class CouncilRoom extends ActionCard {
+	private String description;
 }

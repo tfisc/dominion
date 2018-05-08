@@ -20,7 +20,5 @@ public class Spy extends AttackCard {
 	}
 	
 	public void play(Player p,Game g) {
-		p.drawCard(1);
-		p.incrementActions(1);	
-	}
+		
 }
