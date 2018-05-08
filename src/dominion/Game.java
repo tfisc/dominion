@@ -46,6 +46,71 @@ public class Game {
 	 * - 8 (si 2 joueurs) ou 12 (si 3 ou 4 joueurs) Estate, Duchy et Province 	 * - 10 * (n-1) Curse où n est le nombre de joueurs dans la partie
 	 */
 	public Game(String[] playerNames, List<CardList> kingdomStacks) {
+		CardList Copper=new CardList();
+		CardList Silver=new CardList();
+		CardList Gold=new CardList();
+		CardList Estate=new CardList();
+		CardList Duchy=new CardList();
+		CardList Province=new CardList();
+		CardList Curse=new CardList();
+		Copper copper=new Copper();
+		Silver silver=new Silver();
+		Gold gold=new Gold();
+		Estate estate=new Estate();
+		Duchy duchy=new Duchy();
+		Province province=new Province();
+		Curse curse=new Curse();
+		kingdomStacks.add(Copper);
+		kingdomStacks.add(Silver);
+		kingdomStacks.add(Gold);
+		if(playerNames.length>=1) {
+			Player joueur1=new Player(playerNames[1],this);
+		}
+		if(playerNames.length>=2) {
+			Player joueur2=new Player(playerNames[2],this);
+		}
+		if(playerNames.length>=3) {
+			Player joueur3=new Player(playerNames[3],this);
+		}
+		if(playerNames.length>=4) {
+			Player joueur4=new Player(playerNames[1],this);
+		}
+		
+		for(int i=0;i<60;i++) {
+			kingdomStacks.get(kingdomStacks.size()-2).add(copper);
+		};
+		for(int i=0;i<40;i++) {
+			kingdomStacks.get(kingdomStacks.size()-1).add(silver);
+		}
+		for(int i=0;i<30;i++) {
+			
+			kingdomStacks.get(kingdomStacks.size()).add(gold);
+		}
+		kingdomStacks.add(Estate);
+		kingdomStacks.add(Duchy);
+		kingdomStacks.add(Province);
+		if(playerNames.length==2) {
+			for(int i=0;i<8;i++) {
+				kingdomStacks.get(kingdomStacks.size()-2).add(estate);
+				kingdomStacks.get(kingdomStacks.size()-1).add(duchy);
+				kingdomStacks.get(kingdomStacks.size()).add(province);
+			};
+			
+		}
+		if(playerNames.length>2) {
+			for(int i=0;i<12;i++) {
+				kingdomStacks.get(kingdomStacks.size()-2).add(estate);
+				kingdomStacks.get(kingdomStacks.size()-1).add(duchy);
+				kingdomStacks.get(kingdomStacks.size()).add(province);
+			};
+			
+		}
+		kingdomStacks.add(Curse);
+		for(int i=0;i<(playerNames.length-1)*10;i++) {
+			kingdomStacks.get(kingdomStacks.size()).add(curse);
+		}
+		
+		supplyStacks=kingdomStacks;
 	}
 	
 	/**
@@ -60,12 +125,14 @@ public class Game {
 		trashedCards.add(c);
 	}
 	public Player getPlayer(int index) {
+		return players[index];
 	}
 	
 	/**
 	 * Renvoie le nombre de joueurs participant à la partie
 	 */
 	public int numberOfPlayers() {
+		return players.length;
 	}
 	
 	/**
@@ -73,6 +140,15 @@ public class Game {
 	 * joueurs, ou -1 si le joueur n'est pas dans le tableau.
 	 */
 	private int indexOfPlayer(Player p) {
+		int i=0;
+		while(i<players.length) {
+			if(p.equals(players[i]))
+			{
+				return i;
+			}
+			i++;
+		}
+		return -1;
 	}
 	
 	/**
@@ -88,6 +164,19 @@ public class Game {
 	 * premier).
 	 */
 	public List<Player> otherPlayers(Player p) {
+		int i=indexOfPlayer(p);
+		int j=i;
+		int k=0;
+		List<Player> retour=new ArrayList<Player>();
+		while(j<players.length) {
+			retour.add(players[j]);
+			j++;
+		}
+		while(k<i) {
+			retour.add(players[k]);
+			j++;
+		}
+		return retour;
 	}
 	
 	/**
@@ -98,6 +187,12 @@ public class Game {
 	 * non-vide de la réserve (cartes royaume et cartes communes)
 	 */
 	public CardList availableSupplyCards() {
+		int i=0;
+		CardList retour=new CardList();
+		while(i<supplyStacks.size()) {
+			retour.add(supplyStacks.get(i).get(0));
+		}
+		return retour;
 	}
 	
 	/**
@@ -135,6 +230,19 @@ public class Game {
 	 * ne correspond
 	 */
 	public Card getFromSupply(String cardName) {
+		int i=0;
+		int j=0;
+		while(i<supplyStacks.size()) {
+			j=0;
+			while(j<supplyStacks.get(i).size()) {
+				if(supplyStacks.get(i).get(j).getName().equals(cardName)) {
+					return supplyStacks.get(i).get(j);
+				}
+				j++;
+			}
+		i++;	
+		}
+		return null;
 	}
 	
 	/**
@@ -145,7 +253,25 @@ public class Game {
 	 * ne correspond au nom passé en argument
 	 */
 	public Card removeFromSupply(String cardName) {
+		int i=0;
+		int j=0;
+		Card c;
+		while(i<supplyStacks.size()) {
+			j=0;
+			while(j<supplyStacks.get(i).size()) {
+				if(supplyStacks.get(i).get(j).getName().equals(cardName)) {
+					c=supplyStacks.get(i).get(j);
+					supplyStacks.get(i).remove(supplyStacks.get(i).get(j));
+					return c;
+					
+				}
+				j++;
+			}
+		i++;	
+		}
+		return null;
 	}
+	
 	
 	/**
 	 * Teste si la partie est terminée
@@ -159,6 +285,24 @@ public class Game {
 	 * c'est que la partie est terminée)
 	 */
 	public boolean isFinished() {
+		int i=0;
+		int j=0;
+		while(i<3 && i<supplyStacks.size()) {
+			if(supplyStacks.get(j).size()==0) {
+				i++;
+			}
+			j++;
+		}
+		for(int k=0;k<supplyStacks.size();k++) {
+			if(supplyStacks.get(k).get(0).getName().equals("Province")) {
+				return false;
+			}
+		}
+		if(i<3) {
+			return false;
+		}
+		return true;
+		
 	}
 	
 	/**

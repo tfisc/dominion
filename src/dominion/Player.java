@@ -1,6 +1,8 @@
 package dominion;
 import java.util.*;
 import dominion.card.*;
+import dominion.card.common.Copper;
+import dominion.card.common.Estate;
 
 /**
  * Un joueur de Dominion
@@ -67,6 +69,23 @@ public class Player {
 	public Player(String name, Game game) {
 		this.name=name;
 		this.game=game;
+		hand=new CardList();
+		discard=new CardList();
+		draw=new CardList();
+		inPlay=new CardList();
+		Estate estate=new Estate();
+		Copper copper=new Copper();
+		for(int i=0;i<3;i++) {
+			discard.add(estate);
+		}
+		for(int i=0;i<7;i++) {
+			discard.add(copper);
+		}
+		drawCard();
+		drawCard();
+		drawCard();
+		drawCard();
+		drawCard();
 	}
 
 	/**
