@@ -63,51 +63,51 @@ public class Game {
 		kingdomStacks.add(Copper);
 		kingdomStacks.add(Silver);
 		kingdomStacks.add(Gold);
-		if(playerNames.length>=1) {
-			Player joueur1=new Player(playerNames[1],this);
+		if(playerNames.length>1) {
+			Player joueur1=new Player(playerNames[0],this);
 		}
 		if(playerNames.length>=2) {
-			Player joueur2=new Player(playerNames[2],this);
+			Player joueur2=new Player(playerNames[1],this);
 		}
 		if(playerNames.length>=3) {
-			Player joueur3=new Player(playerNames[3],this);
+			Player joueur3=new Player(playerNames[2],this);
 		}
-		if(playerNames.length>=4) {
-			Player joueur4=new Player(playerNames[1],this);
+		if(playerNames.length==4) {
+			Player joueur4=new Player(playerNames[3],this);
 		}
 		
 		for(int i=0;i<60;i++) {
-			kingdomStacks.get(kingdomStacks.size()-2).add(copper);
+			kingdomStacks.get(kingdomStacks.size()-3).add(copper);
 		};
 		for(int i=0;i<40;i++) {
-			kingdomStacks.get(kingdomStacks.size()-1).add(silver);
+			kingdomStacks.get(kingdomStacks.size()-2).add(silver);
 		}
 		for(int i=0;i<30;i++) {
 			
-			kingdomStacks.get(kingdomStacks.size()).add(gold);
+			kingdomStacks.get(kingdomStacks.size()-1).add(gold);
 		}
 		kingdomStacks.add(Estate);
 		kingdomStacks.add(Duchy);
 		kingdomStacks.add(Province);
 		if(playerNames.length==2) {
 			for(int i=0;i<8;i++) {
-				kingdomStacks.get(kingdomStacks.size()-2).add(estate);
-				kingdomStacks.get(kingdomStacks.size()-1).add(duchy);
-				kingdomStacks.get(kingdomStacks.size()).add(province);
+				kingdomStacks.get(kingdomStacks.size()-3).add(estate);
+				kingdomStacks.get(kingdomStacks.size()-2).add(duchy);
+				kingdomStacks.get(kingdomStacks.size()-1).add(province);
 			};
 			
 		}
 		if(playerNames.length>2) {
 			for(int i=0;i<12;i++) {
-				kingdomStacks.get(kingdomStacks.size()-2).add(estate);
-				kingdomStacks.get(kingdomStacks.size()-1).add(duchy);
-				kingdomStacks.get(kingdomStacks.size()).add(province);
+				kingdomStacks.get(kingdomStacks.size()-3).add(estate);
+				kingdomStacks.get(kingdomStacks.size()-2).add(duchy);
+				kingdomStacks.get(kingdomStacks.size()-1).add(province);
 			};
 			
 		}
 		kingdomStacks.add(Curse);
 		for(int i=0;i<(playerNames.length-1)*10;i++) {
-			kingdomStacks.get(kingdomStacks.size()).add(curse);
+			kingdomStacks.get(kingdomStacks.size()-1).add(curse);
 		}
 		
 		supplyStacks=kingdomStacks;
