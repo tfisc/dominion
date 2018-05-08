@@ -142,7 +142,18 @@ public class Player {
 	 * (le deck complet c'est-à-dire toutes les cartes dans la main, la
 	 * défausse, la pioche et en jeu)
 	 */
+	public void addDiscard(Card c) {
+		discard.add(c);
+	}
 	public CardList totalCards() {
+		 CardList allcards = new CardList();
+		 allcards.addAll(hand);
+		 allcards.addAll(discard);
+		 allcards.addAll(draw);
+		 allcards.addAll(inPlay);
+		 return allcards;
+		 
+		
 	}
 	
 	/**
@@ -153,6 +164,16 @@ public class Player {
 	 * {@code victoryValue()}) des cartes
 	 */
 	public int victoryPoints() {
+		int i;
+		int pointVictoire=0;
+		CardList allcards = new CardList();
+		allcards=totalCards();
+		for(i=0;i<allcards.size();i++)
+		{
+			pointVictoire+=allcards.get(i).victoryValue(this);
+		}
+		return pointVictoire;
+		
 	}
 	
 	/**
@@ -167,7 +188,11 @@ public class Player {
 	 * de la classe {@code Game}.
 	 */
 	public List<Player> otherPlayers() {
+		List<Player> joueurs=new ArrayList<Player>();
+		joueurs=this.game.otherPlayers(this);
+		return joueurs;
 	}
+	
 	
 	/**
 	 * Pioche une carte dans la pioche du joueur.
@@ -180,6 +205,17 @@ public class Player {
 	 * @return la carte piochée, {@code null} si aucune carte disponible
 	 */
 	public Card drawCard() {
+		Card pioche;
+		if (draw.size()==0)
+		{
+			draw.addAll(discard);
+			discard.clear();
+			draw.shuffle();
+		}
+		pioche=draw.get(0);
+		draw.remove(0);
+		return pioche;
+		
 	}
 	
 	/**
@@ -205,18 +241,60 @@ public class Player {
 	 * Renvoie la liste de toutes les cartes Trésor dans la main du joueur
 	 */
 	public CardList getTreasureCards() {
+		List<CardType> type=new ArrayList<CardType>();
+		CardList retour=new CardList();
+		for(int i = 0;i<hand.size();i++)
+		{
+			type=hand.get(i).getTypes();
+			for(int j=0;j<type.size();j++)
+			{
+				if(type.get(j)==CardType.Treasure) {
+					retour.add(hand.get(i));
+					
+			}
+		}
+		}
+		return retour;
 	}
 	
 	/**
 	 * Renvoie la liste de toutes les cartes Action dans la main du joueur
 	 */
 	public CardList getActionCards() {
+		List<CardType> type=new ArrayList<CardType>();
+		CardList retour=new CardList();
+		for(int i = 0;i<hand.size();i++)
+		{
+			type=hand.get(i).getTypes();
+			for(int j=0;j<type.size();j++)
+			{
+				if(type.get(j)==CardType.Action) {
+					retour.add(hand.get(i));
+					
+			}
+		}
+		}
+		return retour;
 	}
 	
 	/**
 	 * Renvoie la liste de toutes les cartes Victoire dans la main du joueur
 	 */
 	public CardList getVictoryCards() {
+		List<CardType> type=new ArrayList<CardType>();
+		CardList retour=new CardList();
+		for(int i = 0;i<hand.size();i++)
+		{
+			type=hand.get(i).getTypes();
+			for(int j=0;j<type.size();j++)
+			{
+				if(type.get(j)==CardType.Victory) {
+					retour.add(hand.get(i));
+					
+			}
+		}
+		}
+		return retour;
 	}
 	
 	/**
@@ -230,6 +308,9 @@ public class Player {
 	 * {@code inPlay} et exécute la méthode {@code play(Player p)} de la carte.
 	 */
 	public void playCard(Card c) {
+		hand.remove(c);
+		inPlay.add(c);
+		c.play(this);
 	}
 	
 	/**
@@ -243,6 +324,15 @@ public class Player {
 	 * fait rien.
 	 */
 	public void playCard(String cardName) {
+		int i=0;
+		boolean trouve=false;
+		while(i<hand.size() && trouve==false) {
+			if(hand.get(i).getName()==cardName) {
+				playCard(hand.get(i));
+				trouve=true;
+			}
+			i++;
+		}
 	}
 	
 	/**
@@ -255,6 +345,9 @@ public class Player {
 	 * emplacement précédent au préalable.
 	 */
 	public void gain(Card c) {
+		if(c!=null) {
+			discard.add(c);
+		}
 	}
 	
 	/**
@@ -267,6 +360,11 @@ public class Player {
 	 * null} si aucune carte n'a été prise dans la réserve.
 	 */
 	public Card gain(String cardName) {
+		Card nouvelle;
+		nouvelle=game.getFromSupply(cardName);
+		discard.add(nouvelle);
+		game.removeFromSupply(cardName);
+		return nouvelle;
 	}
 	
 	/**
@@ -284,6 +382,16 @@ public class Player {
 	 * lieu
 	 */
 	public Card buyCard(String cardName) {
+		
+		Card nouvelle;
+		nouvelle=game.getFromSupply(cardName);
+		if(money>=nouvelle.getCost() && buys>=1) {
+			money-=nouvelle.getCost();
+			buys--;
+			discard.add(nouvelle);
+			return nouvelle;
+		}
+		return null;
 	}
 	
 	/**
@@ -408,6 +516,8 @@ public class Player {
 	 * Les compteurs d'actions et achats sont mis à 1
 	 */
 	public void startTurn() {
+		actions=1;
+		buys=1;
 	}
 	
 	/**
@@ -418,6 +528,17 @@ public class Player {
 	 * - Le joueur pioche 5 cartes en main
 	 */
 	public void endTurn() {
+		actions=0;
+		money=0;
+		buys=0;
+		discard.addAll(hand);
+		discard.addAll(inPlay);
+		drawCard();
+		drawCard();
+		drawCard();
+		drawCard();
+		drawCard();
+		
 	}
 	
 	/**
@@ -448,5 +569,36 @@ public class Player {
 	 * du joueur
 	 */
 	public void playTurn() {
+		CardList actionsDispo=new CardList();
+		CardList tresorsDispo=new CardList();
+		actionsDispo=getActionCards();
+		String reponse="init";
+		startTurn();
+		//on joue les cartes actions
+		while(actions>0 && reponse !="" && actionsDispo.size()>0) {
+			reponse=chooseCard("choose an action card in your hand",actionsDispo,true);
+			if(reponse!="") {
+				playCard(reponse);
+				actions--;
+			}
+		}
+		
+		//on joue les cartes tr�sors
+		tresorsDispo=getTreasureCards();
+		for(int i=0;i<tresorsDispo.size();i++) {
+			playCard(tresorsDispo.get(i).getName());
+		}
+		 //on fait les achat 
+		reponse ="init";
+		while(buys>0 && reponse !="") {
+			reponse=chooseCard("choose a card you want to buy",game.availableSupplyCards(),true);
+		
+			if(reponse!="") {
+			buyCard(reponse);
+			buys--;
+			}
+		}
+			
+		endTurn();
 	}
 }
