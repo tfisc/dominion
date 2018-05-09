@@ -17,37 +17,36 @@ public class Militia extends AttackCard {
 		this.description="Each other player discards down to 3 cards in his hand";
 	}
 	
-	public void play(Player p, Game g) {	
+	public void play(Player p) {	
 		
-		//+ 2 pièces
+		//+ 2 piï¿½ces
 		List<Player> l = new ArrayList <Player>();
 		int i=1;
 		
-		p.incrementBuys(2);
+		p.incrementMoney(2);
 				
-		l=g.otherPlayers(p);
+		l=p.getGame().otherPlayers(p);
 		while(i<=l.size()) {
-			l.add(g.otherPlayers(p).get(i));
+			l.add(p.getGame().otherPlayers(p).get(i));
 			i++;
 		}
 		
-		//défausse les adversaires
+		//dï¿½fausse les adversaires
 		i=1;
 		
 		while(i<l.size()) { //tant que la liste de joueurs n'est pas finie
-			Player p2; //joueur adverse sélectionné
+			Player p2; //joueur adverse sï¿½lectionnï¿½
 			String cardChoice;
 			Card cardRemove;
-			int j=1;
 			cardChoice="";
 
 			p2=l.get(i);
 			
-			while((p2.cardsInHand()).size()>3) { //tant que le nombre de cartes en main du joueur est différent de 3
+			while((p2.cardsInHand()).size()>3) { //tant que le nombre de cartes en main du joueur est diffï¿½rent de 3
 				cardChoice=p2.chooseCard("Choose several cards until you have tree cards left in your hand.", p2.cardsInHand(),false);
-				cardRemove=(p2.cardsInHand()).getCard(cardChoice);//récupère le nom de la carte en main choisie par le joueur
-				(p2.cardsInHand()).remove(cardRemove); //supprimme la carte choisie de la main du joueur et la récupère dans la variable cardRemove
-				p2.addDiscard(cardRemove); //rajoute la carte retirée de la main du joueur dans la défausse du joueur grâce à la méthode addDiscard(à écrire)
+				cardRemove=(p2.cardsInHand()).getCard(cardChoice);//rï¿½cupï¿½re le nom de la carte en main choisie par le joueur
+				(p2.cardsInHand()).remove(cardRemove); //supprimme la carte choisie de la main du joueur et la rï¿½cupï¿½re dans la variable cardRemove
+				p2.addDiscard(cardRemove); //rajoute la carte retirï¿½e de la main du joueur dans la dï¿½fausse du joueur grï¿½ce ï¿½ la mï¿½thode addDiscard(ï¿½ ï¿½crire)
 			}		
 			i++;
 		}

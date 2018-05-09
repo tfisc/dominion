@@ -16,7 +16,10 @@ public class Moat extends ReactionCard {
 		this.description="When another player plays an Attack card, you may reveal this from your hand. If you do, you are unaffected by that Attack.";
 	}
 	
-	public void play(Player p, Game g) {
-		p.drawCard(2);
+	public void play(Player p) {
+		p.drawCard();
+		p.drawCard();
+		
+		
 	}
 }

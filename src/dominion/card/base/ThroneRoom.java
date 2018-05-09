@@ -18,6 +18,6 @@ public class ThroneRoom extends ActionCard {
 		this.description="Choose an Action card in your hand. Play it twice.";
 	}
 	
-	public void play(Player p, Game g) {
+	public void play(Player p) {
 	}
 }
