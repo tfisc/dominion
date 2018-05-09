@@ -19,22 +19,22 @@ public class Mine extends ActionCard {
 	
 	public void play(Player p){
 		int i=1, j=1;
-		boolean stop=false; //pour stopper la boucle quand la carte trésor est retirée
-		Card cardSelect; //carte sélectionée
-		List<CardType> l = new ArrayList<CardType>(); //liste des types de la carte sélectionnée
+		boolean stop=false; //pour stopper la boucle quand la carte trï¿½sor est retirï¿½e
+		Card cardSelect; //carte sï¿½lectionï¿½e
+		List<CardType> l = new ArrayList<CardType>(); //liste des types de la carte sï¿½lectionnï¿½e
 		
 		while(i<=p.cardsInHand().size()) {
 			cardSelect= p.cardsInHand().get(i);
 			while(j<=cardSelect.getTypes().size()&&stop==false) {
 				if(cardSelect.getTypes().get(j)==CardType.Treasure) {
 					(p.cardsInHand()).remove(cardSelect); //supprime de la main du joueur
-					cardSelect.addTrashedCards; //rajoute dans les cartes retirées
+					p.getGame().addTrashedCards(cardSelect); //rajoute dans les cartes retirï¿½es
 					stop=true;
 				}
 				j++;
 			}
 			i++;
 		}
-		//continuer pour la deuxième action  et la troisième
+		//continuer pour la deuxiï¿½me action  et la troisiï¿½me
 	}
 }

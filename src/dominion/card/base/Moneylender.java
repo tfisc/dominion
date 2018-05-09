@@ -18,6 +18,20 @@ public class Moneylender extends ActionCard {
 		this.description="Trash a Copper card from your hand. If you do, +3";
 	}
 	
-	public void play(Player p, Game g) {
+	public void play(Player p) {
+		
+		Card cardSelect;
+		int i = 0;
+		
+		while(i<=p.getTreasureCards().size()){
+			cardSelect=p.getTreasureCards().get(i); //récupère une carte dans la main du joueur
+			if(cardSelect.getName()=="Copper"){ //si la carte est une carte cuivre
+				p.cardsInHand().remove(cardSelect); //supprime la carte sélectionnée de la main du joueur
+				p.getGame().addTrashedCards(cardSelect); //rajoute la carte supprimée dans le rébu
+				p.incrementMoney(3); //rajoute 3 pièces au joueur
+			}
+			
+			i++;
+		}
 	}
 }

@@ -124,6 +124,7 @@ public class Game {
 	public void addTrashedCards(Card c) {
 		trashedCards.add(c);
 	}
+
 	public Player getPlayer(int index) {
 		return players[index];
 	}

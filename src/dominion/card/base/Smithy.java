@@ -17,7 +17,10 @@ public class Smithy extends ActionCard {
 		this.description="+3 Cards";
 	}
 	
-	public void play(Player p, Game g) {
-		p.drawCard(3);
+	public void play(Player p) {
+		
+		p.drawCard();
+		p.drawCard();
+		p.drawCard();
 	}
 }

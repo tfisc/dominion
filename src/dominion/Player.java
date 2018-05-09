@@ -169,6 +169,7 @@ public class Player {
 	public void addDiscard(Card c) {
 		discard.add(c);
 	}
+	
 	public void addHand(Card c) {
 		hand.add(c);
 	}
