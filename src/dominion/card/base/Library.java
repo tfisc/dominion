@@ -22,14 +22,17 @@ public class Library extends ActionCard {
 		choices.add("Oui");
 		choices.add("Non");
 		int i=0;
-		String reponse=""
+		String reponse="";
 		Card c; 
-		CardList hand = new CardList();
 		 while(p.cardsInHand().size()<7){
 			 c=p.drawCard();
 			 while(i<c.getTypes().size()){
 				 if(c.getTypes().get(i)==CardType.Action){
 					 reponse=p.choose("Do you want to add this card to your discard ?", choices, false);
+					 if(reponse.equalsIgnoreCase("Oui")) {
+						 p.addDiscard(c);
+						 p.cardsInHand().remove(c.getName());
+					 }
 				 }
 			 }
 			 
