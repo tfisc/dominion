@@ -10,7 +10,7 @@ import dominion.card.*;
  * Lorsqu’un adversaire joue une carte Attaque, vous pouvez dévoiler cette carte de votre main. Dans ce cas, l’Attaque n’a pas d’effet sur vous.
  */
 public class Moat extends ReactionCard {
-	
+	private String description;
 	public Moat() {
 		super("Moat",2);
 		this.description="When another player plays an Attack card, you may reveal this from your hand. If you do, you are unaffected by that Attack.";

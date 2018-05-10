@@ -17,6 +17,6 @@ public class Thief extends AttackCard {
 		this.description="Each other player reveals the top 2 cards of his deck. If they revealed any Treasure cards, they trash one of them that you choose. You may gain any or all of these trashed cards. They discard the other tevealed cards.";
 	}
 	
-	public void play(Player p, Game g) {
+	public void play(Player p) {
 	}
 }
