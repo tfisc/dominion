@@ -2,6 +2,7 @@ package dominion;
 import java.util.*;
 import dominion.card.*;
 import dominion.card.common.*;
+import test.Test;
 
 /**
  * Class représentant une partie de Dominion
@@ -329,5 +330,11 @@ public class Game {
 			Player p = this.players[i];
 			System.out.println(String.format("%s: %d Points.\n%s\n", p.getName(), p.victoryPoints(), p.totalCards().toString()));
 		}
+	}
+	
+	public static void main (String[] args){
+		
+		Game g1=Test.defaultGame();
+		g1.run();
 	}
 }

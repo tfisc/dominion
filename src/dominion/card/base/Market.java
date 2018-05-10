@@ -15,9 +15,9 @@ public class Market extends ActionCard {
 	
 	String description;
 	
-	public Market(String name, int cost, String descr) {
-		super(name,cost);
-		this.description = descr;
+	public Market() {
+		super("Market",5);
+		this.description = "+1 Card,+1 Action,+1 Buy,+1 Money";
 	}
 	
 	public void play(Player p) {

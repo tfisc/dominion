@@ -14,10 +14,10 @@ public class Village extends ActionCard {
 	
 	String description;
 	
-	public Village(String name, int cost, String descr){
+	public Village(){
 		
-		super(name,cost);
-		this.description=descr;
+		super("Village",2);
+		this.description="+1 Card,+2 Actions";
 	}
 
 	public void play(Player p)
