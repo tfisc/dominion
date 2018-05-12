@@ -22,7 +22,6 @@ public class Thief extends AttackCard {
 		List<Player> l = new ArrayList <Player>();
 		List<String> liste=new ArrayList<String>();
 		List<String> listeChoix=new ArrayList<String>();
-		String reponse=""; 
 		Player p2;
 		Card c1, c2;
 		String c="";
@@ -30,53 +29,59 @@ public class Thief extends AttackCard {
 		int j=0;
 		boolean tresor=false;
 		
+		//liste de tous les joueurs adverses
 		l=p.getGame().otherPlayers(p);
 		while(i<=l.size()) {
 			l.add(p.getGame().otherPlayers(p).get(i));
 			i++;
 		}
 		
+		//tant que tous les joueurs adverses n'ont pas été pris en compte
 		while(i<=l.size()) {
 			p2=l.get(i);
-			c1=p2.drawCard();
-			c2=p2.drawCard();
+			c1=p2.drawCard(); //le joueur adverse dévoile une première carte
+			c2=p2.drawCard(); //le joueur adverse dévoile une deuxième carte
 			
-			if(liste.size()>0) {
+			if(liste.size()>1) { //si la liste de carte est déjà remplie, la mettre à vide
 				liste.remove(1);
+				liste.remove(0);
+			}
+			if(liste.size()==1) {  //si la liste de carte est déjà remplie, la mettre à vide
+				liste.remove(0);
 			}
 			
+			//Tant qu'on a pas analysé tous les types de la carte 1
 			while(j<c1.getTypes().size())
 			{
-				if(c1.getTypes().get(j)==CardType.Treasure)
-				{
+				if(c1.getTypes().get(j)==CardType.Treasure){ //si la carte est un tresor, on la rajoute à la liste 
 					liste.add(c1.getName());
+					tresor=true;
 				}
-				if (tresor==false) {
-					
-					p2.addDiscard(c1);
-				}
-				
-				j++;
+				j++;			
+			}
 			
+			if (tresor==false) {		//sinon on la défausse			
+				p2.addDiscard(c1);
 			}
 			
 			j=0;
 			
-			while(j<c2.getTypes().size())
+			while(j<c2.getTypes().size()) //pareil pour la carte 2
 			{
 				if(c2.getTypes().get(j)==CardType.Treasure)
 				{
 					liste.add(c2.getName());
+					tresor=true;
 				}
-				if (tresor==false) {
-					
-					p2.addDiscard(c2);
-				}
-				
+								
 				j++;			
 			}
 			
-			if(liste.size()>1) {
+			if (tresor==false) {					
+				p2.addDiscard(c2);
+			}
+			
+			if(liste.size()>1) { //si les deux cartes dévoilées sont des trésors, demande au joueur laquelle il souhaite retirer
 				c = p.choose("Tapez le nom de la carte que vous souhaitez retirer", liste, false);
 				if(c == c1.getName()) {
 					p2.addDiscard(c2);
@@ -88,7 +93,7 @@ public class Thief extends AttackCard {
 				}
 			}
 			
-			else if(liste.size()==1) {
+			else if(liste.size()==1) { //si qu'une carte trésor, celle ci est directement retirée
 					listeChoix.add(liste.get(0));
 				}
 			
@@ -97,7 +102,7 @@ public class Thief extends AttackCard {
 		
 		boolean stop=false;
 		
-		while(stop==false) {
+		while(stop==false) { //tant que la liste de choix de cartes n'est pas vide ou que le joueur souhaite en retirer encore, donner le choix
 		
 		c = p.choose("Choisissez une des cartes que vous souhaitez garder sinon appuyez sur entrée", listeChoix, false);
 		if(c=="") {
