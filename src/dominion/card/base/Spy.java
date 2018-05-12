@@ -9,7 +9,7 @@ import dominion.card.*;
  * 
  * +1 Carte.
  * +1 Action.
- * Tous les joueurs (vous aussi) dévoilent la première carte de leur deck. Vous décidez ensuite si chaque carte dévoilée est défaussée ou replacée sur son deck.
+ * Tous les joueurs (vous aussi) dÃ©voilent la premiÃ¨re carte de leur deck. Vous dÃ©cidez ensuite si chaque carte dÃ©voilÃ©e est dÃ©faussÃ©e ou replacÃ©e sur son deck.
  */
 public class Spy extends AttackCard {
 	
@@ -51,7 +51,47 @@ public class Spy extends AttackCard {
 			}
 		}
 		
-		//tous les joueurs dévoilent la première carte de leur pioche à faire
+		i=0;
+		Card c; //carte dévoilée
+		Player p2; //joueur sélectionné
+		String reponse=""; //choix du joueur
+		List<Player> l = new ArrayList <Player>(); //nouvelle listes de joueurs
+		List<String> liste=new ArrayList<String>();//liste de cartes pouvant être défaussée
+		
+		
+		//remplis la liste de joueurs avec les joueurs adverses et nous même
+		l=p.getGame().otherPlayers(p);
+		while(i<=l.size()) {
+			l.add(p.getGame().otherPlayers(p).get(i));
+			i++;
+		}
+		l.add(p);
+		
+		//Tous les joueurs
+		while(i<=l.size()) {
+			
+			//le joueur dévoile la première carte de sa pioche
+			p2=l.get(i);
+			c=p2.drawCard();
+			
+			//si il y a déjà la carte du joueur précédent dans la liste, la supprimer
+			if(liste.size()>0) {
+				liste.remove(1);
+			}
+			
+			//rajouter la carte dévoilée du joueur dans la liste
+			liste.add(c.getName());
+			
+			//demande au joueur p de choisir si la carte sera défaussée ou non
+			reponse = p.choose("Tapez le nom de la carte si vous souhaitez qu'elle soit défaussée, sinon tapez sur entrée", liste , false);
+			if(reponse!="") {
+				p2.addDiscard(c);
+			}
+			else {
+				p2.addDraw(c);
+			}
+			i++;
+		}
 	}
 		
 }
