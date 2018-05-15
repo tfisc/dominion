@@ -173,6 +173,11 @@ public class Player {
 	public void addHand(Card c) {
 		hand.add(c);
 	}
+	
+	public void addDraw(Card c){
+		draw.add(c);
+	}
+	
 	public CardList totalCards() {
 		 CardList allcards = new CardList();
 		 allcards.addAll(hand);
