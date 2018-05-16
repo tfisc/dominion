@@ -18,8 +18,8 @@ public class Laboratory extends ActionCard {
 		description="+2 Cards,+1 Action";
 	}
 		public void play(Player p) {
-			p.drawCard();
-			p.drawCard();
+			p.addHand(p.drawCard());
+			p.addHand(p.drawCard());
 			p.incrementActions(1);
 	}
 }

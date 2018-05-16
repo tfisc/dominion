@@ -19,10 +19,23 @@ public class Feast extends ActionCard {
 	 }
 	 
 	 public void play(Player p) {
-		 Card c;
+		 CardList gagnable=new CardList();
 		 String reponse="init";
-		 p.getGame().addTrashedCards(this);
-		 reponse=p.chooseCard("Gain a card costing up to 5 pieces", p.getGame().availableSupplyCards(), true);
+		 for(int i=0;i<p.getGame().availableSupplyCards().size();i++){
+			 if(p.getGame().availableSupplyCards().get(i).getCost()<=5){
+				 gagnable.add(p.getGame().availableSupplyCards().get(i));
+			 }
+			 
+		 }
+		 
+		 reponse=p.chooseCard("Choose a card to trash", p.cardsInHand(), false);
+		 p.getGame().addTrashedCards(p.cardsInHand().getCard(reponse));
+		 p.removeHand(reponse);
+		 
+		 
+		
+		 reponse=p.chooseCard("Gain a card costing up to 5 pieces", gagnable, false);
+	
 		 p.gain(reponse);
+		 }
 	 }
-}

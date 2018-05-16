@@ -19,32 +19,20 @@ public class Bureaucrat extends AttackCard {
 	}
 		public void play (Player p) {
 			int i=0;
-			int j=0;
-			int k=0;
-			boolean trouve=false;
-			p.addDiscard(p.getGame().removeFromSupply("Silver"));
+			String carte;
+			p.addDraw(p.getGame().removeFromSupply("Silver"));
 			
 			while(i<p.getGame().otherPlayers(p).size()) {
-				trouve=false;
-				j=0;
-				while(j<p.getGame().otherPlayers(p).get(i).cardsInHand().size() && trouve==false)
-				{
+				if(p.getGame().otherPlayers(p).get(i).getVictoryCards().size()!=0){
+					p.getGame().otherPlayers(p).get(i).addDraw(p.getGame().otherPlayers(p).get(i).getVictoryCards().get(1));
+					carte=p.getGame().otherPlayers(p).get(i).getVictoryCards().get(1).getName();
+					p.getGame().otherPlayers(p).get(i).removeHand(carte);
+				}
+				i++;
+
 				
-					k=0;
-					while(k<p.getGame().otherPlayers(p).get(i).cardsInHand().get(j).getTypes().size() && trouve==false)
-					{
-					if(p.getGame().otherPlayers(p).get(i).cardsInHand().get(j).getTypes().get(k)==CardType.Victory)
-					{
-						p.getGame().otherPlayers(p).get(i).addDiscard(p.getGame().otherPlayers(p).get(i).cardsInHand().get(j));
-						p.getGame().otherPlayers(p).get(i).cardsInHand().remove(j);
-						trouve=true;
-					}
-					k++;
-					}
-					j++;
-				}
-				}
-			}
-			
+				
 		}
+	} 
+}
 	

@@ -185,6 +185,15 @@ public class Player {
 		hand.remove(Cardname);
 	}
 	
+	public void removeDraw(String Cardname){
+		draw.remove(Cardname);
+	}
+	
+	public void removeInPlay(String Cardname){
+		inPlay.remove(Cardname);
+	}
+	
+	
 	public CardList totalCards() {
 		 CardList allcards = new CardList();
 		 allcards.addAll(hand);
@@ -196,6 +205,7 @@ public class Player {
 		
 	}
 	
+
 	/**
 	 * Renvoie le nombre total de points de victoire du joueur
 	 * 

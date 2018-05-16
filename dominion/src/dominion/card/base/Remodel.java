@@ -20,24 +20,28 @@ public class Remodel extends ActionCard {
 	
 	public void play(Player p) {
 		
+		
+		
 		String cardChoiceName;
 		Card cardChoice, cardSave;
 		boolean stop=false;
 		
 		
 		//Ecarte une carte de la main du joueur
-		cardChoiceName=p.chooseCard("Choose one card in your hand", p.cardsInHand(),false);
+		cardChoiceName=p.chooseCard("Choose one card in your hand to trash", p.cardsInHand(),false);
 		cardChoice = (p.cardsInHand()).getCard(cardChoiceName);
 		cardSave=cardChoice;
+		p.getGame().addTrashedCards(cardChoice);
+		p.removeHand(cardChoiceName);
 		
 		
 		//Tant que le joueur n'a pas choisi de carte qui vaut 2 îèces de plus ou moins dans la réserve, réaffiche la demande et sinon rajoute la carte choisie dans la main
 		while(stop!=true){
 		
 		cardChoiceName=p.chooseCard("Choose one card in supply stacks which cost 2 more pieces", p.getGame().availableSupplyCards(), false);
-		
-		if(cardChoice.getCost() <= cardSave.getCost()+2){
-			p.addHand(cardChoice);
+		cardChoice= (p.getGame().availableSupplyCards().getCard(cardChoiceName));
+		if(cardChoice.getCost() >= cardSave.getCost()+2){
+			p.addHand(p.getGame().removeFromSupply(cardChoiceName));
 			stop=true;		
 		}
 		

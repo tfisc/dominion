@@ -14,21 +14,21 @@ public class Moneylender extends ActionCard {
 	String description;
 	
 	public Moneylender() {
-		super("MoneyLender",4);
+		super("Moneylender",4);
 		this.description="Trash a Copper card from your hand. If you do, +3";
 	}
 	
 	public void play(Player p) {
 		
-		Card cardSelect;
 		int i = 0;
+		boolean ok=false;
 		
-		while(i<=p.getTreasureCards().size()){
-			cardSelect=p.getTreasureCards().get(i); //récupère une carte dans la main du joueur
-			if(cardSelect.getName()=="Copper"){ //si la carte est une carte cuivre
-				p.cardsInHand().remove(cardSelect); //supprime la carte sélectionnée de la main du joueur
-				p.getGame().addTrashedCards(cardSelect); //rajoute la carte supprimée dans le rébu
+		while(i<p.getTreasureCards().size() && ok==false){
+			if(p.getTreasureCards().get(i).getName().equals("Copper")){ //si la carte est une carte cuivre
+				p.getGame().addTrashedCards(p.getTreasureCards().get(i)); //rajoute la carte supprimée dans le rébu
+				p.removeHand(p.getTreasureCards().get(i).getName()); //supprime la carte sélectionnée de la main du joueur
 				p.incrementMoney(3); //rajoute 3 pièces au joueur
+				ok = true;
 			}
 			
 			i++;

@@ -1,13 +1,14 @@
 package test;
 
 import dominion.Player;
-import dominion.card.*;
+import dominion.card.Card;
+import dominion.card.CardList;
 import dominion.card.common.*;
 
 public class TestPlayer extends Test {
 
 	private static void testPlayerConstructor(Test t) {
-		GameProxy g = new GameProxy(minimalGame());
+		GameProxy g = new GameProxy(IOGame.minimal());
 		Player p = g.getPlayer(0);
 		PlayerProxy p_p = new PlayerProxy(p);
 		t.check(p_p.hand.size() == 5);
@@ -15,7 +16,7 @@ public class TestPlayer extends Test {
 	}
 
 	private static void testIncrements(Test t) {
-		GameProxy g = new GameProxy(minimalGame());
+		GameProxy g = new GameProxy(IOGame.minimal());
 		Player p = g.getPlayer(0);
 		PlayerProxy p_p = new PlayerProxy(p);
 		p_p.clear();
@@ -37,7 +38,7 @@ public class TestPlayer extends Test {
 	}
 
 	private static void testDrawCard(Test t) {
-		GameProxy g = new GameProxy(minimalGame());
+		GameProxy g = new GameProxy(IOGame.minimal());
 		Player p = g.getPlayer(0);
 		PlayerProxy p_p = new PlayerProxy(p);
 
@@ -46,13 +47,7 @@ public class TestPlayer extends Test {
 		p_p.addToDraw(Copper.class, 2);
 		t.check(p.drawCard().getName().equals("Copper"));
 		t.check(p_p.draw.size() == 1);
-		
-		//test que le drawCard, lorsque la pioche est vide, transfère le discard vers le draw, puis pioche
-		p_p.clear();
-		p_p.addToDiscard(Copper.class, 3);
-		t.check(p.drawCard().getName().equals("Copper"));
-		t.check(p_p.discard.size() == 0);
-		t.check(p_p.draw.size() == 2);
+
 		//test que le drawCard, lorsque la pioche est vide, transfère le discard vers le draw, puis pioche
 		p_p.clear();
 		p_p.addToDiscard(Copper.class, 3);
@@ -60,16 +55,13 @@ public class TestPlayer extends Test {
 		t.check(p_p.discard.size() == 0);
 		t.check(p_p.draw.size() == 2);
 
-				//test quand aucune carte, ni dans draw ni dans discard
-				p_p.clear();
-				t.check(p.drawCard() == null);
-
-			
-		
+		//test quand aucune carte, ni dans draw ni dans discard
+		p_p.clear();
+		t.check(p.drawCard() == null);
 	}
 
 	private static void testCardsInHand(Test t) {
-		GameProxy g = new GameProxy(minimalGame());
+		GameProxy g = new GameProxy(IOGame.minimal());
 		Player p = g.getPlayer(0);
 		PlayerProxy p_p = new PlayerProxy(p);
 		//test que le cardsInHand renvoie bien une liste indépendante
@@ -81,7 +73,7 @@ public class TestPlayer extends Test {
 	}
 
 	private static void testTotalCards(Test t) {
-		GameProxy g = new GameProxy(minimalGame());
+		GameProxy g = new GameProxy(IOGame.minimal());
 		Player p = g.getPlayer(0);
 		PlayerProxy p_p = new PlayerProxy(p);
 
@@ -94,7 +86,7 @@ public class TestPlayer extends Test {
 	}
 
 	private static void testVictoryPoints(Test t) {
-		GameProxy g = new GameProxy(minimalGame());
+		GameProxy g = new GameProxy(IOGame.minimal());
 		Player p = g.getPlayer(0);
 		PlayerProxy p_p = new PlayerProxy(p);
 
@@ -121,7 +113,7 @@ public class TestPlayer extends Test {
 	}
 
 	private static void testGetTreasureCards(Test t) {
-		GameProxy g = new GameProxy(minimalGame());
+		GameProxy g = new GameProxy(IOGame.minimal());
 		Player p = g.getPlayer(0);
 		PlayerProxy p_p = new PlayerProxy(p);
 
@@ -144,7 +136,7 @@ public class TestPlayer extends Test {
 	}
 
 	private static void testPlayCard(Test t) {
-		GameProxy g = new GameProxy(minimalGame());
+		GameProxy g = new GameProxy(IOGame.minimal());
 		Player p = g.getPlayer(0);
 		PlayerProxy p_p = new PlayerProxy(p);
 
@@ -162,7 +154,7 @@ public class TestPlayer extends Test {
 	}
 
 	private static void testGain(Test t) {
-		GameProxy g = new GameProxy(minimalGame());
+		GameProxy g = new GameProxy(IOGame.minimal());
 		Player p = g.getPlayer(0);
 		PlayerProxy p_p = new PlayerProxy(p);
 		p_p.clear();
@@ -172,7 +164,7 @@ public class TestPlayer extends Test {
 	}
 
 	private static void testBuyCard(Test t) {
-		GameProxy g = new GameProxy(minimalGame());
+		GameProxy g = new GameProxy(IOGame.minimal());
 		Player p = g.getPlayer(0);
 		PlayerProxy p_p = new PlayerProxy(p);
 
@@ -187,7 +179,7 @@ public class TestPlayer extends Test {
 	}
 
 	private static void testBuyCardTooExpensive(Test t) {
-		GameProxy g = new GameProxy(minimalGame());
+		GameProxy g = new GameProxy(IOGame.minimal());
 		Player p = g.getPlayer(0);
 		PlayerProxy p_p = new PlayerProxy(p);
 
@@ -201,7 +193,7 @@ public class TestPlayer extends Test {
 	}
 
 	private static void testBuyCardNoBuys(Test t) {
-		GameProxy g = new GameProxy(minimalGame());
+		GameProxy g = new GameProxy(IOGame.minimal());
 		Player p = g.getPlayer(0);
 		PlayerProxy p_p = new PlayerProxy(p);
 
@@ -232,7 +224,6 @@ public class TestPlayer extends Test {
 	public static void main(String[] args) {
 		TestPlayer t = new TestPlayer();
 		t.run();
-		System.out.println("----");
-		System.out.println(t);
+		t.showResults();
 	}
 }

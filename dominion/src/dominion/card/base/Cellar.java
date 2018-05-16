@@ -19,16 +19,14 @@ public class Cellar extends ActionCard {
 	}
 		public void play (Player p) {
 			String reponse="init";
-					List<String> liste=new ArrayList<String>();
-					liste.add(p.cardsInHand().toString());
 			p.incrementActions(1);
 			while(reponse !="") {
 			
-				reponse=p.choose("Taper le nom de la carte à défauser, sinon appuyez sur entrer", liste, true);
+				reponse=p.chooseCard("Taper le nom de la carte à défauser, sinon appuyez sur entrer", p.cardsInHand(), true);
 				if(reponse !="") {
 					p.addDiscard(p.cardsInHand().getCard(reponse));
 					p.removeHand(reponse);
-					p.drawCard();
+					p.addHand(p.drawCard());
 			}
 		
 			
