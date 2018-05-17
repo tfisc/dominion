@@ -22,7 +22,7 @@ public class Spy extends AttackCard {
 	
 	public void play(Player p) {
 		
-		String cardActionChoiceName;
+	/*	String reponse="init";
 		Card cardActionChoice;
 		boolean stop=false;
 		int i=0;
@@ -31,67 +31,12 @@ public class Spy extends AttackCard {
 		p.addHand(p.drawCard());
 		
 		//+1 Action
-		while(stop!=true){
-			
-			cardActionChoiceName=p.chooseCard("Choose one action card.", p.getGame().availableSupplyCards(),false);
-			cardActionChoice=p.getGame().availableSupplyCards().getCard(cardActionChoiceName);
-			
-			while(i<=cardActionChoice.getTypes().size()){
-				
-				if(cardActionChoice.getTypes().get(i)==CardType.Action){
-					p.addHand(cardActionChoice);
-					stop=true;
-				}
-				else{
-					cardActionChoiceName=p.chooseCard("Choose one ACTION card.", p.getGame().availableSupplyCards(),false);
-					cardActionChoice=p.getGame().availableSupplyCards().getCard(cardActionChoiceName);
-				}
-				
-				i++;	
-			}
-		}
+		p.incrementActions(1);
 		
-		i=0;
-		Card c; //carte dévoilée
-		Player p2; //joueur sélectionné
-		String reponse=""; //choix du joueur
-		List<Player> l = new ArrayList <Player>(); //nouvelle listes de joueurs
-		List<String> liste=new ArrayList<String>();//liste de cartes pouvant être défaussée
+		reponse=p.*/
 		
 		
-		//remplis la liste de joueurs avec les joueurs adverses et nous même
-		l=p.getGame().otherPlayers(p);
-		while(i<=l.size()) {
-			l.add(p.getGame().otherPlayers(p).get(i));
-			i++;
-		}
-		l.add(p);
 		
-		//Tous les joueurs
-		while(i<=l.size()) {
-			
-			//le joueur dévoile la première carte de sa pioche
-			p2=l.get(i);
-			c=p2.drawCard();
-			
-			//si il y a déjà la carte du joueur précédent dans la liste, la supprimer
-			if(liste.size()>0) {
-				liste.remove(1);
-			}
-			
-			//rajouter la carte dévoilée du joueur dans la liste
-			liste.add(c.getName());
-			
-			//demande au joueur p de choisir si la carte sera défaussée ou non
-			reponse = p.choose("Tapez le nom de la carte si vous souhaitez qu'elle soit défaussée, sinon tapez sur entrée", liste , false);
-			if(reponse!="") {
-				p2.addDiscard(c);
-			}
-			else {
-				p2.addDraw(c);
-			}
-			i++;
-		}
 	}
 		
 }

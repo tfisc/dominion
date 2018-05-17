@@ -11,14 +11,23 @@ import dominion.card.*;
  */
 public class Moat extends ReactionCard {
 	private String description;
+	private boolean choice;
 	public Moat() {
 		super("Moat",2);
 		this.description="When another player plays an Attack card, you may reveal this from your hand. If you do, you are unaffected by that Attack.";
 	}
 	
+	
+	
+	public boolean reaction(Player p){
+		play(p);
+	return choice;
+	}
+	
 	public void play(Player p) {
-		p.drawCard();
-		p.drawCard();
+		p.addHand(p.drawCard());
+		p.addHand(p.drawCard());
+		
 		
 		
 	}

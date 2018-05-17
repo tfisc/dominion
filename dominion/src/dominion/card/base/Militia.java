@@ -26,10 +26,6 @@ public class Militia extends AttackCard {
 		p.incrementMoney(2);
 				
 		l=p.getGame().otherPlayers(p);
-		while(i<l.size()) {
-			l.add(p.getGame().otherPlayers(p).get(i));
-			i++;
-		}
 		
 		//d�fausse les adversaires
 		i=0;
@@ -42,7 +38,7 @@ public class Militia extends AttackCard {
 
 			p2=l.get(i);
 			
-			while((p2.cardsInHand()).size()>2) { //tant que le nombre de cartes en main du joueur est diff�rent de 3
+			while(p2.cardsInHand().size()>3) { //tant que le nombre de cartes en main du joueur est diff�rent de 3
 				cardChoice=p2.chooseCard("Choose several cards until you have tree cards left in your hand.", p2.cardsInHand(),false);
 				cardRemove=(p2.cardsInHand()).getCard(cardChoice);//r�cup�re le nom de la carte en main choisie par le joueur
 				p2.addDiscard(cardRemove); //rajoute la carte retir�e de la main du joueur dans la d�fausse du joueur gr�ce � la m�thode addDiscard(� �crire)

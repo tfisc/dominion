@@ -25,7 +25,6 @@ public class Moneylender extends ActionCard {
 		
 		while(i<p.getTreasureCards().size() && ok==false){
 			if(p.getTreasureCards().get(i).getName().equals("Copper")){ //si la carte est une carte cuivre
-				p.getGame().addTrashedCards(p.getTreasureCards().get(i)); //rajoute la carte supprimée dans le rébu
 				p.removeHand(p.getTreasureCards().get(i).getName()); //supprime la carte sélectionnée de la main du joueur
 				p.incrementMoney(3); //rajoute 3 pièces au joueur
 				ok = true;

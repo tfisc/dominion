@@ -18,23 +18,21 @@ public class Mine extends ActionCard {
 	}
 	
 	public void play(Player p){
-		int i=1, j=1;
-		boolean stop=false; //pour stopper la boucle quand la carte tr�sor est retir�e
-		Card cardSelect; //carte s�lection�e
-		List<CardType> l = new ArrayList<CardType>(); //liste des types de la carte s�lectionn�e
-		
-		while(i<=p.cardsInHand().size()) {
-			cardSelect= p.cardsInHand().get(i);
-			while(j<=cardSelect.getTypes().size()&&stop==false) {
-				if(cardSelect.getTypes().get(j)==CardType.Treasure) {
-					(p.cardsInHand()).remove(cardSelect); //supprime de la main du joueur
-					p.getGame().addTrashedCards(cardSelect); //rajoute dans les cartes retir�es
-					stop=true;
-				}
-				j++;
-			}
-			i++;
+	CardList gagnable=new CardList();
+	Card supprime;
+	String reponse="init";
+	reponse=p.chooseCard("Ecartez une carte trésor de votre main", p.getTreasureCards(), false);
+	supprime=p.getTreasureCards().getCard(reponse);
+	p.removeHand(reponse);
+	
+	for(int i=0;i<p.getGame().availableSupplyCards().size();i++){
+		if(p.getGame().availableSupplyCards().get(i).getTypes().get(0)==CardType.Treasure && p.getGame().availableSupplyCards().get(i).getCost()<=supprime.getCost()+3){
+			gagnable.add(p.getGame().availableSupplyCards().get(i));
 		}
-		//continuer pour la deuxi�me action  et la troisi�me
+	}
+	
+	reponse=p.chooseCard("Choisissez une carte trésor à ajouter à votre main", gagnable, false);
+	p.addHand(p.getGame().removeFromSupply(reponse));
+		
 	}
 }

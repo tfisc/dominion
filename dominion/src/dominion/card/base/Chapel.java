@@ -21,7 +21,6 @@ public class Chapel extends ActionCard {
 		while(i<4 && reponse !="") {
 			reponse=p.chooseCard("Taper le nom de la carte à défauser, sinon appuyez sur entrer", p.cardsInHand(), true);
 			if(reponse !="") {
-				p.getGame().addTrashedCards(p.cardsInHand().getCard(reponse));
 				p.removeHand(reponse);
 				i++;
 		}

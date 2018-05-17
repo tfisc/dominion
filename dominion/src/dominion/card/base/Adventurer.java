@@ -21,6 +21,7 @@ public class Adventurer extends ActionCard {
 		boolean tresor=false;
 		Card c;
 		while(i<2) {
+			tresor=false;
 			j=0;
 			c=p.drawCard();
 			while(j<c.getTypes().size() && tresor==false)

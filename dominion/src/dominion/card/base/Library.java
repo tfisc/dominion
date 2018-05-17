@@ -34,6 +34,7 @@ public class Library extends ActionCard {
 						 p.cardsInHand().remove(c.getName());
 					 }
 				 }
+			 i++;
 			 }
 			 
 		 }

@@ -29,7 +29,6 @@ public class Feast extends ActionCard {
 		 }
 		 
 		 reponse=p.chooseCard("Choose a card to trash", p.cardsInHand(), false);
-		 p.getGame().addTrashedCards(p.cardsInHand().getCard(reponse));
 		 p.removeHand(reponse);
 		 
 		 

@@ -19,18 +19,14 @@ public class ThroneRoom extends ActionCard {
 	}
 	
 	public void play(Player p) {
-		String reponse;
-		CardList actionCardsInHand=new CardList();
-		for(int i=0;i<p.cardsInHand().size();i++) {
-			for(int j=0;j<p.cardsInHand().get(i).getTypes().size();i++) {
-				if(p.cardsInHand().get(i).getTypes().get(j)==CardType.Action) {
-					actionCardsInHand.add(p.cardsInHand().get(i));
-				}
-			}
-		}
-	reponse=p.chooseCard("Choisissez une carte à jouer deux fois", actionCardsInHand, false);
-	p.playCard(reponse);
-	p.playCard(reponse);
+		String reponse="init";
+		Card c,c1;
+	
+	reponse=p.chooseCard("Choisissez une carte à jouer deux fois", p.getActionCards(), false);
+	c=p.getActionCards().getCard(reponse);
+	c1=c;
+	p.playCard(c);
+	p.playCard(c1);
 	
 	}
 }
